@@ -2,7 +2,7 @@
 
 
 메인화면
-(비로그인인 경)
+(비로그인인 경우)
 ![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/802f4e4e-7cdc-4d32-b280-da62278577ac)
 (관리자 로그인인 경우)
 ![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/a09d67df-37db-409d-a468-6128b3b5f4e2)
