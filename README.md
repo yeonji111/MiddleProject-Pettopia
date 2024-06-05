@@ -38,6 +38,7 @@
 
 
 ### 입양 신청서 작성
+-> 신청희망자에게 누락되는 정보 없이 신청서를 접수받기 위해 검사 진행
 ![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/20dff898-c65b-4fe3-9526-99f20e2ac697)
 
 ### 공지사항 게시판
