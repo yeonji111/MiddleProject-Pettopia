@@ -30,7 +30,6 @@
 
 
 ### 입양신청 전 주의사항 안내
-![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/50f43002-3d3e-4520-ab9b-37e53412289d)
 ![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/134dfe5e-0e7e-45a8-9375-0516a22788e4)
 
 
