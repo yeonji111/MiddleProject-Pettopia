@@ -12,6 +12,7 @@
 ![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/7e8db869-10c6-47e0-b11d-eaff8cd036ff)
 
 ### 오시는길
+-> 카카오지도 API를 사용하여 구현, 카카오 비지니스 채널 API를 사용하여 톡상담 기능 구현
 ![image](https://github.com/yeonji111/MiddleProject_Pettopia/assets/154227258/4b013243-8bd9-4d09-9e22-5c043e168d7d)
 
 ### 유기동물 목록
