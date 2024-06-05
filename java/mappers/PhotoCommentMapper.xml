@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="photoComment.PhotoCommentMapper">
+	<select id="getPhotoCommentList" parameterType="int"
+		resultType="commentVO">
+		SELECT a.*, u.NICKNAME
+		FROM PHOTO_REPLY a
+		JOIN users u ON a.id = u.id
+		WHERE BOARD_NUM = #{num}
+	</select>
+
+	<insert id="insertPhotoComment" parameterType="photoCommentVO">
+		INSERT INTO PHOTO_REPLY
+		(COMMENT_NUM, BOARD_NUM, ID, COMMENT_DATE, CONTENT)
+		VALUES
+		(photo_incre.nextval,#{boardNum},#{id},SYSDATE, #{content})
+	</insert>
+	<update id="updatePhotoComment" parameterType="photoCommentVO">
+		UPDATE PHOTO_REPLY
+		SET
+		CONTENT = #{content}
+		WHERE COMMENT_NUM = #{num}
+	</update>
+	<delete id="deletePhotoComment" parameterType="int">
+		DELETE FROM PHOTO_REPLY
+		WHERE COMMENT_NUM = #{num}
+	</delete>
+</mapper>

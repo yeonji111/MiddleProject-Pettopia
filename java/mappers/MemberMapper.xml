@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member.MemberMapper">
+
+	<select id="getMemberListCount" parameterType="searchVO" resultType="int">
+		select
+			count(*) cnt
+		from
+			users
+	</select>
+
+	<select id="getMemberList" resultType="memberVO">
+		select
+			*
+		from
+			users
+		order by create_date desc
+	</select>
+	
+	<select id="getMember" parameterType="string" resultType="memberVO">
+		select
+			id,
+			name,
+			password,
+			email
+		from
+			users
+		where
+			id = #{id}
+	</select>
+	<select id="loginMember" parameterType="memberVO" resultType="memberVO">
+		select
+			id,
+			name,
+			nickname
+		from
+			users
+		where
+			id = #{id} and password=#{password}
+	</select>
+	<insert id="insertMember" parameterType="memberVO">
+		insert into users
+			(id, password, name, nickname, create_date)
+		values
+			(#{id}, #{password}, #{name}, #{nickname}, sysdate)
+	</insert>
+	<delete id="deleteMember" parameterType="string">
+		delete from
+			users
+		where
+			id = #{id}
+	</delete>
+</mapper>

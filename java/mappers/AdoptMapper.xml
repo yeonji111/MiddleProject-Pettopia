@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adopt.AdoptMapper">
+	<select id="getAdoptListCount" parameterType="searchVO" resultType="int">
+		select
+    		count(*) as cnt
+		from
+   			animal 
+		where
+    		(status = '공고중' or status = '입양가능' or status = '입양 심사중') and
+    		(file_path is not null or file_path != '') and 
+    		(gender = '암컷' or gender = '수컷')
+	</select>
+	<select id="getAdoptList" parameterType="searchVO" resultType="adoptVO">
+		select
+			*
+		from
+		(
+			select
+				rownum rnum,
+				c.*
+			from
+			(					
+				select
+					*
+				from
+					animal a
+				order by a.rescue_date desc
+			) c
+		) b
+		where rnum between #{firstRecordIndex}+1 and #{lastRecordIndex}
+		order by b.rescue_date desc
+	</select>
+	<select id="getAdopt" parameterType="int" resultType="adoptVO">
+		select
+			*
+		from
+			animal a
+		where
+ 			num = #{num}
+	</select>
+	<update id="updateAdopt" parameterType="adoptVO">
+		update animal
+		set status = #{status}
+		where num = (
+		    select a.num 
+		    from animal a 
+		    inner join form b on b.animal_id = a.num  
+		    where b.form_id = #{num}
+		)
+	</update>
+</mapper>

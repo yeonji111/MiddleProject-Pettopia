@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="store.StoreMapper">
+	<select id="getStoreListCount" parameterType="searchVO" resultType="int">
+		select
+			count(*) cnt
+		from
+			store
+        <where>
+        	<if test="searchType != null and searchType != ''">
+                main_category like '%' || #{searchType} || '%'
+            </if>
+            <if test="searchWord != null and searchWord != ''">
+               or main_category like '%' || #{searchWord} || '%'
+            </if>
+            <if test="category != null and category != ''">
+                or sub_category like '%' || #{category} || '%'
+            </if>
+        </where>  
+	</select>
+	<select id="getStoreList" parameterType="searchVO" resultType="storeVO">
+    select *
+    from (
+        select
+            rownum rnum,
+            a.*
+        from (
+            select
+                title, 
+                link, 
+                TO_CHAR(price, '999,999,999') AS price, 
+                main_category,
+                sub_category,
+                image 
+            from 
+                store
+            <where>
+            	<if test="searchType != null and searchType != ''">
+                    main_category like '%' || #{searchType} || '%'
+                </if>
+            	<if test="searchWord != null and searchWord != ''">
+                    or main_category like '%' || #{searchWord} || '%'
+                </if>
+                <if test="category != null and category != ''">
+                    or sub_category like '%' || #{category} || '%'
+                </if>
+            </where>   
+        ) a
+    )
+    where rnum between #{firstRecordIndex} + 1 and #{lastRecordIndex}
+</select>
+
+	<select id="getStore" parameterType="int" resultType="storeVO">
+		select 
+  			title, 
+  			link, 
+  			TO_CHAR(price, '999,999,999') AS price, 
+  			main_category,
+  			sub_category,
+  			image
+  		from 
+  			store
+	</select>
+</mapper>

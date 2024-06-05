@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boards.BoardMapper">
+	<select id="getBoardListCount" parameterType="searchVO" resultType="int">
+		select
+			count(*) cnt
+		from
+			Noti_BOARD a
+		<where>
+			<if test="searchType == 'title'">
+				title like '%' || #{searchWord} || '%'
+			</if>
+			<if test="searchType == 'content'">
+				content like '%' || #{searchWord} || '%'
+			</if>
+			<if test="searchType == 'writer'">
+				b.name like '%' || #{searchWord} || '%'
+			</if>
+		</where>
+	</select>
+	<select id="getBoardList" parameterType="searchVO" resultType="boardVO">
+		select
+			*
+		from
+		(
+			select
+				rownum rnum,
+				c.*
+			from
+			(					
+				select
+					a.num,
+					a.id,
+					u.name,
+					a.title,
+					u.NICKNAME,
+					a.create_date
+				from
+					Noti_BOARD a 
+				, users u
+				<where>
+					<if test="searchType == 'title'">
+						title like '%' || #{searchWord} || '%'
+					</if>
+					<if test="searchType == 'content'">
+						content like '%' || #{searchWord} || '%'
+					</if>
+					<if test="searchType == 'writer'">
+						b.name like '%' || #{searchWord} || '%'
+					</if>
+				</where>
+				where a.id = u.id
+				order by a.create_date desc
+			) c
+		)
+		where rnum between #{firstRecordIndex} + 1 and #{lastRecordIndex}
+
+	</select>
+	<select id="getBoard" parameterType="int" resultType="boardVO">
+		SELECT a.*, u.NICKNAME
+		FROM Noti_BOARD a
+		JOIN users u ON a.id = u.id
+		WHERE num = #{num}
+	</select>
+	<insert id="insertBoard" parameterType="boardVO">
+		insert into Noti_BOARD
+			(num, id, title, content,create_date)
+		values
+			(auto_incre.nextval, #{id}, #{title}, #{content}, sysdate)
+	</insert>
+	<update id="updateBoard" parameterType="boardVO">
+		update
+			Noti_BOARD
+		set
+			title = #{title},
+			content = #{content}
+		where
+			num = #{num}
+	</update>
+	<delete id="deleteBoard" parameterType="int">
+		delete from
+			Noti_BOARD
+		where
+			num = #{num}
+	</delete>
+</mapper>

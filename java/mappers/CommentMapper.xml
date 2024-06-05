@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment.CommentMapper">
+	<select id="getCommentList" parameterType="int"
+		resultType="commentVO">
+		SELECT a.*, u.NICKNAME
+		FROM noti_reply a
+		JOIN users u ON a.id = u.id
+		WHERE BOARD_NUM = #{num}
+	</select>
+
+	<insert id="insertComment" parameterType="commentVO">
+		INSERT INTO noti_reply
+		(COMMENT_NUM, BOARD_NUM, ID, COMMENT_DATE, CONTENT)
+		VALUES
+		(REPLY_INCRE.nextval,#{boardNum},#{id},SYSDATE, #{content})
+	</insert>
+	<update id="updateComment" parameterType="commentVO">
+		UPDATE noti_reply
+		SET
+		CONTENT = #{content}
+		WHERE COMMENT_NUM = #{num}
+	</update>
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM noti_reply
+		WHERE COMMENT_NUM = #{num}
+	</delete>
+</mapper>
